@@ -33,6 +33,7 @@ const Login = () => {
 	const onCompleted = (data: LoginMutation) => {
 		const { login: { ok, token } } = data;
 		if (ok && token) {
+			console.log(token)
 			authStorage.set({ token });
 			  authTokenVar(token);
 			  isLoggedInVar(true);

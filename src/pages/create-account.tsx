@@ -42,7 +42,7 @@ const CreateAccount = () => {
 		const { createAccount: { ok } } = data;
 		if (ok) {
 			await userLog('success','Account created successfully , please login !')
-			navigate('/login');
+			navigate('/');
 		}
 	};
 
@@ -81,7 +81,7 @@ const CreateAccount = () => {
 				</AppForm>
 				<div>
 					Already use FoodiZone?{' '}
-					<Link to="/login" className="text-lime-600 hover:underline">
+					<Link to="/" className="text-lime-600 hover:underline">
 						Sign In
 					</Link>
 				</div>
