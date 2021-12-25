@@ -1,7 +1,8 @@
 import React from 'react';
+import LoggedOutRouter from './routers/logged-out-router';
 
 function App() {
-	return <h1 className="text-red-700 text-2xl">My App</h1>;
+	return <LoggedOutRouter />;
 }
 
 export default App;
