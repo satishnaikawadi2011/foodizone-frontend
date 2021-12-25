@@ -6,7 +6,7 @@ import { CreateAccountMutation, useCreateAccountMutation,  UserRole } from '../g
 import { Link,useNavigate } from 'react-router-dom';
 import foodiLogo from '../images/logo.svg';
 import AppFormError from '../components/form/AppFormError';
-import Helmet from 'react-helmet'
+import {Helmet} from 'react-helmet-async'
 import AppFormSelectField, { OptionType } from '../components/form/AppFormSelectField';
 import { userLog } from '../utils/swal/user-log';
 

@@ -6,7 +6,9 @@ import { LoginMutation, useLoginMutation } from '../generated/graphql';
 import { Link } from 'react-router-dom';
 import foodiLogo from '../images/logo.svg';
 import AppFormError from '../components/form/AppFormError';
-import Helmet from 'react-helmet'
+import {Helmet} from 'react-helmet-async'
+import  authStorage from '../utils/storage/auth'
+import { authTokenVar, isLoggedInVar } from '../apollo';
 
 interface ILoginForm {
 	email: string;
@@ -31,9 +33,9 @@ const Login = () => {
 	const onCompleted = (data: LoginMutation) => {
 		const { login: { ok, token } } = data;
 		if (ok && token) {
-			//   localStorage.setItem(LOCALSTORAGE_TOKEN, token);
-			//   authTokenVar(token);
-			//   isLoggedInVar(true);
+			authStorage.set({ token });
+			  authTokenVar(token);
+			  isLoggedInVar(true);
 		}
 	};
 
