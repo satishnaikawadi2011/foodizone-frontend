@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import AppLoader from '../components/shared/AppLoader';
+import Header from '../components/shared/Header';
 import { useMeQuery, UserRole } from '../generated/graphql';
 import Restaurants from '../pages/client/restaurants';
 import NotFound from '../pages/not-found';
@@ -28,6 +29,7 @@ const LoggedInRouter = () => {
 
 	return (
 		<Router>
+			<Header />
 			<Routes>
 				{data.me.role === UserRole.Client &&
 					ClientRoutes.map((route) => {
