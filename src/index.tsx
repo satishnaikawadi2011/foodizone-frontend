@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
+import { AppApolloProvider } from './apollo';
 
 ReactDOM.render(
 	<React.StrictMode>
-		<App />
+		<AppApolloProvider>
+			<App />
+		</AppApolloProvider>
 	</React.StrictMode>,
 	document.getElementById('root')
 );
