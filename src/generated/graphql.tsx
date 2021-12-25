@@ -592,6 +592,13 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginOutput', ok: boolean, error?: string | null | undefined, token?: string | null | undefined } };
 
+export type VerifyEmailMutationVariables = Exact<{
+  input: VerifyEmailInput;
+}>;
+
+
+export type VerifyEmailMutation = { __typename?: 'Mutation', verifyEmail: { __typename?: 'VerifyEmailOutput', error?: string | null | undefined, ok: boolean } };
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -667,6 +674,40 @@ export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginM
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
+export const VerifyEmailDocument = gql`
+    mutation verifyEmail($input: VerifyEmailInput!) {
+  verifyEmail(input: $input) {
+    error
+    ok
+  }
+}
+    `;
+export type VerifyEmailMutationFn = Apollo.MutationFunction<VerifyEmailMutation, VerifyEmailMutationVariables>;
+
+/**
+ * __useVerifyEmailMutation__
+ *
+ * To run a mutation, you first call `useVerifyEmailMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useVerifyEmailMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [verifyEmailMutation, { data, loading, error }] = useVerifyEmailMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useVerifyEmailMutation(baseOptions?: Apollo.MutationHookOptions<VerifyEmailMutation, VerifyEmailMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<VerifyEmailMutation, VerifyEmailMutationVariables>(VerifyEmailDocument, options);
+      }
+export type VerifyEmailMutationHookResult = ReturnType<typeof useVerifyEmailMutation>;
+export type VerifyEmailMutationResult = Apollo.MutationResult<VerifyEmailMutation>;
+export type VerifyEmailMutationOptions = Apollo.BaseMutationOptions<VerifyEmailMutation, VerifyEmailMutationVariables>;
 export const MeDocument = gql`
     query me {
   me {
