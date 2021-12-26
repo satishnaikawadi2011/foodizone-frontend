@@ -6,6 +6,7 @@ import Header from '../components/shared/Header';
 import { useMeQuery, UserRole } from '../generated/graphql';
 import Restaurants from '../pages/client/restaurants';
 import NotFound from '../pages/not-found';
+import AddRestaurant from '../pages/owner/add-restaurant';
 import EditProfile from '../pages/user/edit-profile';
 import VerifyEmail from '../pages/user/verify-email';
 
@@ -21,6 +22,10 @@ const ClientRoutes: RouteType[] = [
 const CommonUserRoutes: RouteType[] = [
 	{ path: '/verify-email', element: <VerifyEmail /> },
 	{ element: <EditProfile />, path: '/edit-profile' }
+];
+
+const OwnerRoutes: RouteType[] = [
+	{ path: 'add-restaurant', element: <AddRestaurant /> }
 ];
 
 const LoggedInRouter = () => {
@@ -40,6 +45,10 @@ const LoggedInRouter = () => {
 			<Routes>
 				{data.me.role === UserRole.Client &&
 					ClientRoutes.map((route) => {
+						return <Route key={route.path} path={route.path} element={route.element} />;
+					})}
+				{data.me.role === UserRole.Owner &&
+					OwnerRoutes.map((route) => {
 						return <Route key={route.path} path={route.path} element={route.element} />;
 					})}
 				{CommonUserRoutes.map((route) => {
