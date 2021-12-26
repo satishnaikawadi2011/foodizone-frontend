@@ -17,6 +17,18 @@ export type Scalars = {
   DateTime: any;
 };
 
+export type AddCategoryInput = {
+  img: Scalars['String'];
+  name: Scalars['String'];
+};
+
+export type AddCategoryOutput = {
+  __typename?: 'AddCategoryOutput';
+  categoryId?: Maybe<Scalars['String']>;
+  error?: Maybe<Scalars['String']>;
+  ok: Scalars['Boolean'];
+};
+
 export type AllCategoriesOutput = {
   __typename?: 'AllCategoriesOutput';
   categories?: Maybe<Array<Category>>;
@@ -28,7 +40,7 @@ export type Category = {
   __typename?: 'Category';
   createdAt: Scalars['DateTime'];
   id: Scalars['String'];
-  img?: Maybe<Scalars['String']>;
+  img: Scalars['String'];
   name: Scalars['String'];
   restaurantCount: Scalars['Int'];
   restaurants?: Maybe<Array<Restaurant>>;
@@ -108,7 +120,7 @@ export type CreatePaymentOuput = {
 
 export type CreateRestaurantInput = {
   address: Scalars['String'];
-  categoryName: Scalars['String'];
+  categorySlug: Scalars['String'];
   coverImg: Scalars['String'];
   name: Scalars['String'];
 };
@@ -215,7 +227,7 @@ export type EditProfileOutput = {
 
 export type EditRestaurantInput = {
   address?: InputMaybe<Scalars['String']>;
-  categoryName?: InputMaybe<Scalars['String']>;
+  categorySlug?: InputMaybe<Scalars['String']>;
   coverImg?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   restaurantId: Scalars['String'];
@@ -270,6 +282,7 @@ export type LoginOutput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addCategory: AddCategoryOutput;
   createAccount: CreateAccountOutput;
   createDish: CreateDishOutput;
   createOrder: CreateOrderOutput;
@@ -284,6 +297,11 @@ export type Mutation = {
   login: LoginOutput;
   takeOrder: TakeOrderOutput;
   verifyEmail: VerifyEmailOutput;
+};
+
+
+export type MutationAddCategoryArgs = {
+  input: AddCategoryInput;
 };
 
 
@@ -603,7 +621,7 @@ export type VerifyEmailOutput = {
   ok: Scalars['Boolean'];
 };
 
-export type CategoryPartsFragment = { __typename?: 'Category', id: string, name: string, img?: string | null | undefined, slug: string, restaurantCount: number };
+export type CategoryPartsFragment = { __typename?: 'Category', id: string, name: string, img: string, slug: string, restaurantCount: number };
 
 export type DishPartsFragment = { __typename?: 'Dish', id: string, name: string, price: number, photo?: string | null | undefined, description: string, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number | null | undefined, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number | null | undefined }> | null | undefined }> | null | undefined };
 
@@ -655,12 +673,24 @@ export type VerifyEmailMutationVariables = Exact<{
 
 export type VerifyEmailMutation = { __typename?: 'Mutation', verifyEmail: { __typename?: 'VerifyEmailOutput', error?: string | null | undefined, ok: boolean } };
 
+export type AllCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllCategoriesQuery = { __typename?: 'Query', allCategories: { __typename?: 'AllCategoriesOutput', error?: string | null | undefined, ok: boolean, categories?: Array<{ __typename?: 'Category', id: string, name: string, slug: string }> | null | undefined } };
+
+export type CategoryQueryVariables = Exact<{
+  input: CategoryInput;
+}>;
+
+
+export type CategoryQuery = { __typename?: 'Query', category: { __typename?: 'CategoryOutput', ok: boolean, error?: string | null | undefined, totalPages?: number | null | undefined, totalResults?: number | null | undefined, restaurants?: Array<{ __typename?: 'Restaurant', id: string, name: string, coverImg: string, address: string, isPromoted: boolean, category?: { __typename?: 'Category', name: string } | null | undefined }> | null | undefined, category?: { __typename?: 'Category', id: string, name: string, img: string, slug: string, restaurantCount: number } | null | undefined } };
+
 export type ClientRestaurantsPageQueryVariables = Exact<{
   input: RestaurantsInput;
 }>;
 
 
-export type ClientRestaurantsPageQuery = { __typename?: 'Query', allCategories: { __typename?: 'AllCategoriesOutput', ok: boolean, error?: string | null | undefined, categories?: Array<{ __typename?: 'Category', id: string, name: string, img?: string | null | undefined, slug: string, restaurantCount: number }> | null | undefined }, restaurants: { __typename?: 'RestaurantsOutput', ok: boolean, error?: string | null | undefined, totalPages?: number | null | undefined, totalResults?: number | null | undefined, results?: Array<{ __typename?: 'Restaurant', id: string, name: string, coverImg: string, address: string, isPromoted: boolean, category?: { __typename?: 'Category', name: string } | null | undefined }> | null | undefined } };
+export type ClientRestaurantsPageQuery = { __typename?: 'Query', allCategories: { __typename?: 'AllCategoriesOutput', ok: boolean, error?: string | null | undefined, categories?: Array<{ __typename?: 'Category', id: string, name: string, img: string, slug: string, restaurantCount: number }> | null | undefined }, restaurants: { __typename?: 'RestaurantsOutput', ok: boolean, error?: string | null | undefined, totalPages?: number | null | undefined, totalResults?: number | null | undefined, results?: Array<{ __typename?: 'Restaurant', id: string, name: string, coverImg: string, address: string, isPromoted: boolean, category?: { __typename?: 'Category', name: string } | null | undefined }> | null | undefined } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -953,6 +983,91 @@ export function useVerifyEmailMutation(baseOptions?: Apollo.MutationHookOptions<
 export type VerifyEmailMutationHookResult = ReturnType<typeof useVerifyEmailMutation>;
 export type VerifyEmailMutationResult = Apollo.MutationResult<VerifyEmailMutation>;
 export type VerifyEmailMutationOptions = Apollo.BaseMutationOptions<VerifyEmailMutation, VerifyEmailMutationVariables>;
+export const AllCategoriesDocument = gql`
+    query allCategories {
+  allCategories {
+    error
+    ok
+    categories {
+      id
+      name
+      slug
+    }
+  }
+}
+    `;
+
+/**
+ * __useAllCategoriesQuery__
+ *
+ * To run a query within a React component, call `useAllCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAllCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAllCategoriesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAllCategoriesQuery(baseOptions?: Apollo.QueryHookOptions<AllCategoriesQuery, AllCategoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AllCategoriesQuery, AllCategoriesQueryVariables>(AllCategoriesDocument, options);
+      }
+export function useAllCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllCategoriesQuery, AllCategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AllCategoriesQuery, AllCategoriesQueryVariables>(AllCategoriesDocument, options);
+        }
+export type AllCategoriesQueryHookResult = ReturnType<typeof useAllCategoriesQuery>;
+export type AllCategoriesLazyQueryHookResult = ReturnType<typeof useAllCategoriesLazyQuery>;
+export type AllCategoriesQueryResult = Apollo.QueryResult<AllCategoriesQuery, AllCategoriesQueryVariables>;
+export const CategoryDocument = gql`
+    query category($input: CategoryInput!) {
+  category(input: $input) {
+    ok
+    error
+    totalPages
+    totalResults
+    restaurants {
+      ...RestaurantParts
+    }
+    category {
+      ...CategoryParts
+    }
+  }
+}
+    ${RestaurantPartsFragmentDoc}
+${CategoryPartsFragmentDoc}`;
+
+/**
+ * __useCategoryQuery__
+ *
+ * To run a query within a React component, call `useCategoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCategoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCategoryQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCategoryQuery(baseOptions: Apollo.QueryHookOptions<CategoryQuery, CategoryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CategoryQuery, CategoryQueryVariables>(CategoryDocument, options);
+      }
+export function useCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CategoryQuery, CategoryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CategoryQuery, CategoryQueryVariables>(CategoryDocument, options);
+        }
+export type CategoryQueryHookResult = ReturnType<typeof useCategoryQuery>;
+export type CategoryLazyQueryHookResult = ReturnType<typeof useCategoryLazyQuery>;
+export type CategoryQueryResult = Apollo.QueryResult<CategoryQuery, CategoryQueryVariables>;
 export const ClientRestaurantsPageDocument = gql`
     query clientRestaurantsPage($input: RestaurantsInput!) {
   allCategories {

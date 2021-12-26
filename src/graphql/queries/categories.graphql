@@ -1,0 +1,11 @@
+query allCategories {
+	allCategories {
+		error
+		ok
+		categories {
+			id
+			name
+			slug
+		}
+	}
+}

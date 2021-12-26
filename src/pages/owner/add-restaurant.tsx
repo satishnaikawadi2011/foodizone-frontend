@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { CreateRestaurantMutation, MyRestaurantsDocument, useCreateRestaurantMutation } from '../../generated/graphql';
+import { useEffect, useState } from 'react';
+import { CreateRestaurantMutation, MyRestaurantsDocument, useAllCategoriesQuery, useCreateRestaurantMutation } from '../../generated/graphql';
 import * as Yup from 'yup'
 import { Helmet } from 'react-helmet-async';
 import AppForm from '../../components/form/AppForm';
@@ -10,6 +10,8 @@ import AppFormFileField from '../../components/form/AppFormFileField';
 import { userLog } from '../../utils/swal/user-log';
 import { useApolloClient } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
+import AppFormSelectField from '../../components/form/AppFormSelectField';
+import AppLoader from '../../components/shared/AppLoader';
 
 
 interface IFormProps {
@@ -41,7 +43,9 @@ const AddRestaurant = () => {
 	const [previewSource, setPreviewSource] = useState<string | ArrayBuffer | null>('');
 	const [uploading, setUploading] = useState(false);
 	const [imageUrl, setImageUrl] = useState('')
-	const [values, setValues] = useState<IFormProps>(initialValues)
+  const [values, setValues] = useState<IFormProps>(initialValues)
+  
+  const {data:allCategoriesResult,loading:allCatLoading} = useAllCategoriesQuery()
 
 	const client = useApolloClient()
 	const navigate = useNavigate();
@@ -115,7 +119,7 @@ const AddRestaurant = () => {
         variables: {
           input: {
             name,
-            categoryName:category,
+            categorySlug:category,
             address,
             coverImg,
           },
@@ -130,7 +134,15 @@ const AddRestaurant = () => {
 			 console.log(e)
 	}
 		
-	};
+  };
+  
+  if (allCatLoading || !allCategoriesResult) {
+    	return (
+			<div className="h-screen flex justify-center items-center">
+				<AppLoader />
+			</div>
+		);
+  }
 
 	return <div className="container flex flex-col items-center mt-52">
 			 <Helmet>
@@ -145,7 +157,7 @@ const AddRestaurant = () => {
 				>
 					<AppFormField fieldName="name" placeholder="Enter name of restaurant" />
 			<AppFormField fieldName="address" placeholder="Enter address of resturant" />
-			<AppFormField fieldName="category" placeholder="Enter category of resturant" />
+			<AppFormSelectField fieldName="category" placeholder="Select a category of resturant"  options={allCategoriesResult.allCategories.categories!.map(c => ({label:c.name,value:c.slug}))}/>
 			<AppFormFileField fieldName='file' accept='image/*' onChange={handleFileInputChange} />
 			{previewSource && <div className="bg-indigo-300 rounded-lg text-center overflow-hidden w-56 sm:w-96 mx-auto">
 				<img alt='Restaurant' src={previewSource as string} className="object-cover h-48 w-full"/>
