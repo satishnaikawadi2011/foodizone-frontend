@@ -7,6 +7,7 @@ import { useMeQuery, UserRole } from '../generated/graphql';
 import Restaurants from '../pages/client/restaurants';
 import NotFound from '../pages/not-found';
 import AddRestaurant from '../pages/owner/add-restaurant';
+import MyRestaurants from '../pages/owner/my-restaurants';
 import EditProfile from '../pages/user/edit-profile';
 import VerifyEmail from '../pages/user/verify-email';
 
@@ -25,7 +26,8 @@ const CommonUserRoutes: RouteType[] = [
 ];
 
 const OwnerRoutes: RouteType[] = [
-	{ path: 'add-restaurant', element: <AddRestaurant /> }
+	{ path: '/add-restaurant', element: <AddRestaurant /> },
+	{ path: '/', element: <MyRestaurants /> }
 ];
 
 const LoggedInRouter = () => {

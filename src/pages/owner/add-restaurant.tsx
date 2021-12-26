@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CreateRestaurantMutation, MyRestaurantsDocument, useCreateRestaurantMutation } from '../../generated/graphql';
 import * as Yup from 'yup'
 import { Helmet } from 'react-helmet-async';
@@ -88,9 +88,7 @@ const AddRestaurant = () => {
           },
         },
 	  });
-			await userLog('toast','New Restaurant added successfully !!')
-      navigate("/");
-        }
+      }
 	};
 
 	const [createRestaurant, { data }] = useCreateRestaurantMutation({onCompleted})
@@ -124,8 +122,10 @@ const AddRestaurant = () => {
         },
 	  });
 			if (!res.data?.createRestaurant.error) {
-			actions.resetForm();
-		}
+        actions.resetForm();
+        await userLog('toast','New Restaurant added successfully !!')
+      navigate("/");
+      } 
 		 } catch (e) {
 			 console.log(e)
 	}
