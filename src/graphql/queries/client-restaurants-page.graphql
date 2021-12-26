@@ -1,4 +1,4 @@
-query clientRestaurantsPageQuery($input: RestaurantsInput!) {
+query clientRestaurantsPage($input: RestaurantsInput!) {
 	allCategories {
 		ok
 		error

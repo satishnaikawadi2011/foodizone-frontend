@@ -5,6 +5,7 @@ import AppLoader from '../components/shared/AppLoader';
 import Header from '../components/shared/Header';
 import { useMeQuery, UserRole } from '../generated/graphql';
 import Restaurants from '../pages/client/restaurants';
+import Search from '../pages/client/search';
 import NotFound from '../pages/not-found';
 import AddRestaurant from '../pages/owner/add-restaurant';
 import MyRestaurants from '../pages/owner/my-restaurants';
@@ -18,7 +19,8 @@ export interface RouteType {
 }
 
 const ClientRoutes: RouteType[] = [
-	{ path: '/', element: <Restaurants /> }
+	{ path: '/', element: <Restaurants /> },
+	{ path: '/search', element: <Search /> }
 ];
 
 const CommonUserRoutes: RouteType[] = [

@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
 import { Restaurant } from '../../components/Restaurant';
-import { useClientRestaurantsPageQueryQuery } from '../../generated/graphql';
+import { useClientRestaurantsPageQuery } from '../../generated/graphql';
 
 const Restaurants = () => {
 	const [page, setPage] = useState(1);
 	const [searchTerm, setSearchTerm] = useState('');
-  const {data,loading} = useClientRestaurantsPageQueryQuery({ variables: { input: { page, pageLength: 6 } } });
+  const {data,loading} = useClientRestaurantsPageQuery({ variables: { input: { page, pageLength: 6 } } });
   const onNextPageClick = () => setPage((current) => current + 1);
   const onPrevPageClick = () => setPage((current) => current - 1);
   const navigate = useNavigate();
