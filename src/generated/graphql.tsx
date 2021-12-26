@@ -585,6 +585,13 @@ export type CreateAccountMutationVariables = Exact<{
 
 export type CreateAccountMutation = { __typename?: 'Mutation', createAccount: { __typename?: 'CreateAccountOutput', error?: string | null | undefined, ok: boolean } };
 
+export type EditProfileMutationVariables = Exact<{
+  input: EditProfileInput;
+}>;
+
+
+export type EditProfileMutation = { __typename?: 'Mutation', editProfile: { __typename?: 'EditProfileOutput', ok: boolean, error?: string | null | undefined } };
+
 export type LoginMutationVariables = Exact<{
   input: LoginInput;
 }>;
@@ -639,6 +646,40 @@ export function useCreateAccountMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateAccountMutationHookResult = ReturnType<typeof useCreateAccountMutation>;
 export type CreateAccountMutationResult = Apollo.MutationResult<CreateAccountMutation>;
 export type CreateAccountMutationOptions = Apollo.BaseMutationOptions<CreateAccountMutation, CreateAccountMutationVariables>;
+export const EditProfileDocument = gql`
+    mutation editProfile($input: EditProfileInput!) {
+  editProfile(input: $input) {
+    ok
+    error
+  }
+}
+    `;
+export type EditProfileMutationFn = Apollo.MutationFunction<EditProfileMutation, EditProfileMutationVariables>;
+
+/**
+ * __useEditProfileMutation__
+ *
+ * To run a mutation, you first call `useEditProfileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditProfileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editProfileMutation, { data, loading, error }] = useEditProfileMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useEditProfileMutation(baseOptions?: Apollo.MutationHookOptions<EditProfileMutation, EditProfileMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditProfileMutation, EditProfileMutationVariables>(EditProfileDocument, options);
+      }
+export type EditProfileMutationHookResult = ReturnType<typeof useEditProfileMutation>;
+export type EditProfileMutationResult = Apollo.MutationResult<EditProfileMutation>;
+export type EditProfileMutationOptions = Apollo.BaseMutationOptions<EditProfileMutation, EditProfileMutationVariables>;
 export const LoginDocument = gql`
     mutation login($input: LoginInput!) {
   login(input: $input) {

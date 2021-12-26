@@ -6,6 +6,7 @@ import Header from '../components/shared/Header';
 import { useMeQuery, UserRole } from '../generated/graphql';
 import Restaurants from '../pages/client/restaurants';
 import NotFound from '../pages/not-found';
+import EditProfile from '../pages/user/edit-profile';
 import VerifyEmail from '../pages/user/verify-email';
 
 export interface RouteType {
@@ -18,7 +19,8 @@ const ClientRoutes: RouteType[] = [
 ];
 
 const CommonUserRoutes: RouteType[] = [
-	{ path: '/verify-email', element: <VerifyEmail /> }
+	{ path: '/verify-email', element: <VerifyEmail /> },
+	{ element: <EditProfile />, path: '/edit-profile' }
 ];
 
 const LoggedInRouter = () => {
