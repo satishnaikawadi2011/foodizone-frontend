@@ -41,7 +41,7 @@ const OwnerRoutes: RouteType[] = [
 	{ path: '/', element: <MyRestaurants /> },
 	{ path: '/restaurants/:id', element: <RestaurantDetail /> },
 	{ path: '/restaurants/:restaurantId/add-dish', element: <AddDish /> },
-	{ path: '/success', element: <Success /> },
+	{ path: '/success/:id', element: <Success /> },
 	{ path: '/canceled', element: <Failure /> }
 ];
 

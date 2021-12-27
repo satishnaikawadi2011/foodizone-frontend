@@ -1,4 +1,4 @@
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -21,8 +21,8 @@ const Header: React.FC = () => {
       <header className="py-4">
         <div className="w-full px-5 xl:px-0 max-w-screen-2xl mx-auto flex justify-between items-center">
           <div className="flex">
-             <button className="mr-5" aria-label="Open Menu" onClick={() => isDrawerOpen(true)}>
-        <svg
+             <button className="mr-5" onClick={() => isDrawerOpen(true)}>
+        {/* <svg
           fill="none"
           stroke="currentColor"
           stroke-linecap="round"
@@ -32,7 +32,8 @@ const Header: React.FC = () => {
           className="w-8 h-8"
         >
           <path d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
+              </svg> */}
+              <FontAwesomeIcon icon={faBars}/>
       </button>
             <Link to="/">
             <img src={appLogo} className="w-44" alt="FoodiZone" />

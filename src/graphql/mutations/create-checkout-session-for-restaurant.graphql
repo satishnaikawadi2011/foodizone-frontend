@@ -1,0 +1,7 @@
+mutation createCheckoutSessionForRestaurantPromotion($input: CreateCheckoutSessionInput!) {
+	createCheckoutSessionForRestaurantPromotion(input: $input) {
+		error
+		ok
+		session_id
+	}
+}

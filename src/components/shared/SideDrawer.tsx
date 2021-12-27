@@ -54,7 +54,7 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ children }) => {
 						</span>
 						{CommomnLinks.map((l) => {
 							return (
-                                <span onClick={() => {
+                                <span key={l.title} onClick={() => {
                                     isDrawerOpen(false);
                                     navigate(l.route);
                                 }} className="flex items-center p-4 hover:bg-indigo-500 hover:text-white hover:cursor-pointer ">
@@ -68,7 +68,7 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ children }) => {
                         {userData?.me.role === UserRole.Owner && 
                         OwnerLinks.map((l) => {
 							return (
-								<span onClick={() => {
+								<span key={l.title} onClick={() => {
                                     isDrawerOpen(false);
                                     navigate(l.route);
                                 }} className="flex items-center p-4 hover:bg-indigo-500 hover:text-white hover:cursor-pointer ">
