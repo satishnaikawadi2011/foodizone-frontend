@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import AppLoader from '../components/shared/AppLoader';
 import Header from '../components/shared/Header';
+import SideDrawer from '../components/shared/SideDrawer';
 import { useMeQuery, UserRole } from '../generated/graphql';
 import Restaurants from '../pages/client/restaurants';
 import Search from '../pages/client/search';
@@ -48,6 +49,7 @@ const LoggedInRouter = () => {
 	return (
 		<Router>
 			<Header />
+			<SideDrawer />
 			<Routes>
 				{data.me.role === UserRole.Client &&
 					ClientRoutes.map((route) => {
