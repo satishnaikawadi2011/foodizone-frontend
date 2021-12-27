@@ -6,12 +6,12 @@ const token = authStorage.get()?.token;
 export const isLoggedInVar = makeVar(Boolean(token));
 export const authTokenVar = makeVar(token);
 export const isDrawerOpen = makeVar(false);
-console.log(token)
 
 export const logout = () => {
   isDrawerOpen(false);
   authStorage.remove();
   isLoggedInVar(false);
+  window.location.href = '/'
 }
 
 
