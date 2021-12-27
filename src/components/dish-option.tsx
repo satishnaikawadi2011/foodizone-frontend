@@ -28,7 +28,7 @@ export const DishOption: React.FC<IDishOptionProps> = ({
 	return (
 		<span
 			onClick={onClick}
-			className={`border px-2 py-1 ${
+			className={` border-2 px-2 py-1 ${
 				isSelected ? 'border-gray-800' :
 				'hover:border-gray-800'}`}
 		>

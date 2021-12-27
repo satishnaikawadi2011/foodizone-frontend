@@ -9,6 +9,7 @@ interface IDishProps {
   isCustomer?: boolean;
   orderStarted?: boolean;
   isSelected?: boolean;
+  photo: string;
   options?: DishOption[] | null;
   addItemToOrder?: (dishId: string) => void;
   removeFromOrder?: (dishId: string) => void;
@@ -21,6 +22,7 @@ export const Dish: React.FC<IDishProps> = ({
   price,
   isCustomer = false,
   orderStarted = false,
+  photo,
   options,
   isSelected,
   addItemToOrder,
@@ -39,10 +41,11 @@ export const Dish: React.FC<IDishProps> = ({
   };
   return (
     <div
-      className={` px-8 py-4 border cursor-pointer  transition-all ${
+      className={` px-8 py-4 border cursor-pointer  transition-all flex justify-between ${
         isSelected ? "border-gray-800" : " hover:border-gray-800"
       }`}
-    >
+    ><div>
+        
       <div className="mb-5">
         <h3 className="text-lg font-medium flex items-center ">
           {name}{" "}
@@ -57,7 +60,7 @@ export const Dish: React.FC<IDishProps> = ({
             </button>
           )}
         </h3>
-        <h4 className="font-medium">{description}</h4>
+        <h4 className="font-medium mt-2">{description}</h4>
       </div>
       <span>$ {price}</span>
       {isCustomer && options && options?.length !== 0 && (
@@ -66,6 +69,10 @@ export const Dish: React.FC<IDishProps> = ({
           <div className="grid gap-2  justify-start">{dishOptions}</div>
         </div>
       )}
+      </div>
+      <div>
+        <img style={{width:100,height:100}} className="rounded-full object-cover" src={photo} alt="Dish" />
+      </div>
     </div>
   );
 };

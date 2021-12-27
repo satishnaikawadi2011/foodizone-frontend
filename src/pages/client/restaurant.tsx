@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Dish } from '../../components/Dish';
@@ -166,6 +166,7 @@ const Restaurant = () => {
         <div className="w-full grid mt-16 md:grid-cols-3 gap-x-5 gap-y-10">
           {data?.restaurant.restaurant?.menu.map((dish, index) => (
             <Dish
+              photo={dish.photo!}
               isSelected={isSelected(dish.id)}
               id={dish.id}
               orderStarted={orderStarted}
