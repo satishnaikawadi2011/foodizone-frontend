@@ -71,7 +71,7 @@ const Search = () => {
               />
             ))}
           </div>
-          <div className="grid grid-cols-3 text-center max-w-md items-center mx-auto mt-10">
+          {data.searchRestaurant.totalResults! > 0 && <div className="grid grid-cols-3 text-center max-w-md items-center mx-auto mt-10">
             {page > 1 ? (
               <button
                 onClick={onPrevPageClick}
@@ -95,7 +95,7 @@ const Search = () => {
             ) : (
               <div></div>
             )}
-          </div>
+          </div>}
         </div>
       )}
 		</div>

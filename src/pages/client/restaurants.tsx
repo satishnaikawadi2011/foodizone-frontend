@@ -62,7 +62,7 @@ const Restaurants = () => {
               />
             ))}
           </div>
-          <div className="grid grid-cols-3 text-center max-w-md items-center mx-auto mt-10">
+          {data?.restaurants.totalResults! > 0 && <div className="grid grid-cols-3 text-center max-w-md items-center mx-auto mt-10">
             {page > 1 ? (
               <button
                 onClick={onPrevPageClick}
@@ -86,7 +86,7 @@ const Restaurants = () => {
             ) : (
               <div></div>
             )}
-          </div>
+          </div>}
         </div>
       )}
     </div>

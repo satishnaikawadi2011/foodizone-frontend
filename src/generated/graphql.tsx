@@ -645,6 +645,13 @@ export type CreateDishMutationVariables = Exact<{
 
 export type CreateDishMutation = { __typename?: 'Mutation', createDish: { __typename?: 'CreateDishOutput', ok: boolean, error?: string | null | undefined } };
 
+export type CreateOrderMutationVariables = Exact<{
+  input: CreateOrderInput;
+}>;
+
+
+export type CreateOrderMutation = { __typename?: 'Mutation', createOrder: { __typename?: 'CreateOrderOutput', ok: boolean, error?: string | null | undefined, orderId?: string | null | undefined } };
+
 export type CreateRestaurantMutationVariables = Exact<{
   input: CreateRestaurantInput;
 }>;
@@ -708,6 +715,13 @@ export type MyRestaurantsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MyRestaurantsQuery = { __typename?: 'Query', myRestaurants: { __typename?: 'MyRestaurantsOutput', ok: boolean, error?: string | null | undefined, restaurants: Array<{ __typename?: 'Restaurant', id: string, name: string, coverImg: string, address: string, isPromoted: boolean, category?: { __typename?: 'Category', name: string } | null | undefined }> } };
+
+export type RestaurantQueryVariables = Exact<{
+  input: RestaurantInput;
+}>;
+
+
+export type RestaurantQuery = { __typename?: 'Query', restaurant: { __typename?: 'RestaurantOutput', ok: boolean, error?: string | null | undefined, restaurant?: { __typename?: 'Restaurant', id: string, name: string, coverImg: string, address: string, isPromoted: boolean, menu: Array<{ __typename?: 'Dish', id: string, name: string, price: number, photo?: string | null | undefined, description: string, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number | null | undefined, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number | null | undefined }> | null | undefined }> | null | undefined }>, category?: { __typename?: 'Category', name: string } | null | undefined } | null | undefined } };
 
 export type SearchRestaurantQueryVariables = Exact<{
   input: SearchRestaurantInput;
@@ -845,6 +859,41 @@ export function useCreateDishMutation(baseOptions?: Apollo.MutationHookOptions<C
 export type CreateDishMutationHookResult = ReturnType<typeof useCreateDishMutation>;
 export type CreateDishMutationResult = Apollo.MutationResult<CreateDishMutation>;
 export type CreateDishMutationOptions = Apollo.BaseMutationOptions<CreateDishMutation, CreateDishMutationVariables>;
+export const CreateOrderDocument = gql`
+    mutation createOrder($input: CreateOrderInput!) {
+  createOrder(input: $input) {
+    ok
+    error
+    orderId
+  }
+}
+    `;
+export type CreateOrderMutationFn = Apollo.MutationFunction<CreateOrderMutation, CreateOrderMutationVariables>;
+
+/**
+ * __useCreateOrderMutation__
+ *
+ * To run a mutation, you first call `useCreateOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOrderMutation, { data, loading, error }] = useCreateOrderMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateOrderMutation(baseOptions?: Apollo.MutationHookOptions<CreateOrderMutation, CreateOrderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateOrderMutation, CreateOrderMutationVariables>(CreateOrderDocument, options);
+      }
+export type CreateOrderMutationHookResult = ReturnType<typeof useCreateOrderMutation>;
+export type CreateOrderMutationResult = Apollo.MutationResult<CreateOrderMutation>;
+export type CreateOrderMutationOptions = Apollo.BaseMutationOptions<CreateOrderMutation, CreateOrderMutationVariables>;
 export const CreateRestaurantDocument = gql`
     mutation createRestaurant($input: CreateRestaurantInput!) {
   createRestaurant(input: $input) {
@@ -1239,6 +1288,49 @@ export function useMyRestaurantsLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type MyRestaurantsQueryHookResult = ReturnType<typeof useMyRestaurantsQuery>;
 export type MyRestaurantsLazyQueryHookResult = ReturnType<typeof useMyRestaurantsLazyQuery>;
 export type MyRestaurantsQueryResult = Apollo.QueryResult<MyRestaurantsQuery, MyRestaurantsQueryVariables>;
+export const RestaurantDocument = gql`
+    query restaurant($input: RestaurantInput!) {
+  restaurant(input: $input) {
+    ok
+    error
+    restaurant {
+      ...RestaurantParts
+      menu {
+        ...DishParts
+      }
+    }
+  }
+}
+    ${RestaurantPartsFragmentDoc}
+${DishPartsFragmentDoc}`;
+
+/**
+ * __useRestaurantQuery__
+ *
+ * To run a query within a React component, call `useRestaurantQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRestaurantQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRestaurantQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useRestaurantQuery(baseOptions: Apollo.QueryHookOptions<RestaurantQuery, RestaurantQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RestaurantQuery, RestaurantQueryVariables>(RestaurantDocument, options);
+      }
+export function useRestaurantLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RestaurantQuery, RestaurantQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RestaurantQuery, RestaurantQueryVariables>(RestaurantDocument, options);
+        }
+export type RestaurantQueryHookResult = ReturnType<typeof useRestaurantQuery>;
+export type RestaurantLazyQueryHookResult = ReturnType<typeof useRestaurantLazyQuery>;
+export type RestaurantQueryResult = Apollo.QueryResult<RestaurantQuery, RestaurantQueryVariables>;
 export const SearchRestaurantDocument = gql`
     query searchRestaurant($input: SearchRestaurantInput!) {
   searchRestaurant(input: $input) {
