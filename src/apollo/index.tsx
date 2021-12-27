@@ -8,6 +8,12 @@ export const authTokenVar = makeVar(token);
 export const isDrawerOpen = makeVar(false);
 console.log(token)
 
+export const logout = () => {
+  isDrawerOpen(false);
+  authStorage.remove();
+  isLoggedInVar(false);
+}
+
 
 const httpLink = createHttpLink({
   uri:"http://localhost:4000/graphql",
