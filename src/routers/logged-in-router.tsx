@@ -14,6 +14,8 @@ import AddDish from '../pages/owner/add-dish';
 import AddRestaurant from '../pages/owner/add-restaurant';
 import MyRestaurants from '../pages/owner/my-restaurants';
 import RestaurantDetail from '../pages/owner/restaurant-detail';
+import Failure from '../pages/stripe/canceled';
+import Success from '../pages/stripe/success';
 import EditProfile from '../pages/user/edit-profile';
 import VerifyEmail from '../pages/user/verify-email';
 
@@ -38,7 +40,9 @@ const OwnerRoutes: RouteType[] = [
 	{ path: '/add-restaurant', element: <AddRestaurant /> },
 	{ path: '/', element: <MyRestaurants /> },
 	{ path: '/restaurants/:id', element: <RestaurantDetail /> },
-	{ path: '/restaurants/:restaurantId/add-dish', element: <AddDish /> }
+	{ path: '/restaurants/:restaurantId/add-dish', element: <AddDish /> },
+	{ path: '/success', element: <Success /> },
+	{ path: '/canceled', element: <Failure /> }
 ];
 
 const LoggedInRouter = () => {

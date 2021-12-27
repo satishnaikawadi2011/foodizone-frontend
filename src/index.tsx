@@ -1,17 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { HelmetProvider } from 'react-helmet-async';
-
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import { AppApolloProvider } from './apollo';
+import { AppStripeProvider } from './stripe';
 
 ReactDOM.render(
 	<React.StrictMode>
 		<AppApolloProvider>
 			<HelmetProvider>
-				<App />
+				<AppStripeProvider>
+					<App />
+				</AppStripeProvider>
 			</HelmetProvider>
 		</AppApolloProvider>
 	</React.StrictMode>,
