@@ -1,17 +1,9 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-  VictoryAxis,
-  VictoryChart,
-  VictoryLabel,
-  VictoryLine,
-  VictoryTheme,
-  VictoryTooltip,
-  VictoryVoronoiContainer,
-} from "victory";
-import {useStripe} from '@stripe/react-stripe-js'
+import { useStripe } from '@stripe/react-stripe-js'
+import {Line} from 'react-chartjs-2'
 
 import { Dish } from '../../components/Dish';
 import { PROMOTION_PRICE } from '../../constants';
@@ -21,6 +13,21 @@ import AppLoader from '../../components/shared/AppLoader';
 type Params = {
 	id:string;
 }
+
+
+export const chartOptions = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top' as const,
+    },
+    title: {
+      display: true,
+      text: 'Sales',
+    },
+  },
+};
+
 
 const RestaurantDetail = () => {
 	const { id } = useParams<Params>();
@@ -64,7 +71,7 @@ const RestaurantDetail = () => {
 		}
   }
   
-    if (loading) {
+    if (loading || !data) {
     	return (
 			<div className="h-screen flex justify-center items-center">
 				<AppLoader />
@@ -120,45 +127,9 @@ const RestaurantDetail = () => {
           )}
         </div>
         <div className="mt-20 mb-10">
-          <h4 className="text-center text-2xl font-medium">Sales</h4>
           <div className="  mt-10">
-            <VictoryChart
-              height={500}
-              theme={VictoryTheme.material}
-              width={window.innerWidth}
-              domainPadding={50}
-              containerComponent={<VictoryVoronoiContainer />}
-            >
-              <VictoryLine
-                labels={({ datum }) => `$${datum.y}`}
-                labelComponent={
-                  <VictoryTooltip
-                    style={{ fontSize: 18 } as any}
-                    renderInPortal
-                    dy={-20}
-                  />
-                }
-                data={data?.myRestaurant.restaurant?.orders.map((order) => ({
-                  x: order.createdAt,
-                  y: order.total,
-                }))}
-                interpolation="natural"
-                style={{
-                  data: {
-                    strokeWidth: 5,
-                  },
-                }}
-              />
-              <VictoryAxis
-                tickLabelComponent={<VictoryLabel renderInPortal />}
-                style={{
-                  tickLabels: {
-                    fontSize: 20,
-                  } as any,
-                }}
-                tickFormat={(tick) => new Date(tick).toLocaleDateString("ko")}
-              />
-            </VictoryChart>
+          <Line options={chartOptions} data={{ labels: data?.myRestaurant.restaurant?.orders.map((order) => order.createdAt),datasets:[{data:data?.myRestaurant.restaurant?.orders.map((order) => order.total),label:'Sales',      borderColor: 'rgb(53, 162, 235)',
+      backgroundColor: 'rgba(53, 162, 235, 0.5)',}] }} />;
           </div>
         </div>
       </div>

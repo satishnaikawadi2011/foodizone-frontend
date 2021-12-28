@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Dish } from '../../components/Dish';
 import { DishOption } from '../../components/dish-option';
 import { CreateOrderItemInput, CreateOrderMutation, useCreateOrderMutation, useRestaurantQuery } from '../../generated/graphql';
+import { confirmAlert } from '../../utils/swal/confirm-alert';
 import { userLog } from '../../utils/swal/user-log';
 
 type RestaurantParams = {
@@ -93,15 +94,16 @@ const Restaurant = () => {
     setOrderItems([]);
   };
   const navigate = useNavigate();
-  const onCompleted = (data:CreateOrderMutation) => {
+  const onCompleted = async(data:CreateOrderMutation) => {
     const {
       createOrder: { ok, orderId },
     } = data;
     if (ok) {
+      await userLog('success','Your order has been placed successfully !')
       navigate(`/orders/${orderId}`);
     }
   };
-	const [createOrderMutation, { loading: placingOrder }] = useCreateOrderMutation();
+	const [createOrderMutation, { loading: placingOrder }] = useCreateOrderMutation({onCompleted});
   const triggerConfirmOrder = async() => {
     if (placingOrder) {
       return;
@@ -110,9 +112,10 @@ const Restaurant = () => {
       await userLog('error','Cannot place an empty order !!')
       return;
     }
-    const ok = window.confirm("You are about to place an order");
-    if (ok) {
-      createOrderMutation({
+    const { isConfirmed } = await confirmAlert('You are about to place an order !', 'Yes')
+    // if (!isConfirmed) return;
+    if (isConfirmed) {
+       createOrderMutation({
         variables: {
           input: {
             restaurantId: params.id as string,

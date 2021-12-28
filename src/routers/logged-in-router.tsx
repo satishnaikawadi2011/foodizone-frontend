@@ -10,6 +10,7 @@ import Restaurant from '../pages/client/restaurant';
 import Restaurants from '../pages/client/restaurants';
 import Search from '../pages/client/search';
 import NotFound from '../pages/not-found';
+import Order from '../pages/order';
 import AddDish from '../pages/owner/add-dish';
 import AddRestaurant from '../pages/owner/add-restaurant';
 import MyRestaurants from '../pages/owner/my-restaurants';
@@ -33,7 +34,8 @@ const ClientRoutes: RouteType[] = [
 
 const CommonUserRoutes: RouteType[] = [
 	{ path: '/verify-email', element: <VerifyEmail /> },
-	{ element: <EditProfile />, path: '/edit-profile' }
+	{ element: <EditProfile />, path: '/edit-profile' },
+	{ path: '/orders/:id', element: <Order /> }
 ];
 
 const OwnerRoutes: RouteType[] = [
