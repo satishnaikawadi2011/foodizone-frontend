@@ -2,3 +2,4 @@ export const STRIPE_PUBLISHABLE_KEY =
 	'pk_test_51KBFnoSDJpMUWMgW8pui7BzCajXCKZvhHKxBdakPNodaVDJPmj5Ms6SFfuOdKBQL7Ekmeii24rmZh0IelMo7SzFD00HASM3Snv';
 
 export const PROMOTION_PRICE = 500;
+export const GOOGLE_MAP_API_KEY = 'AIzaSyCDCPQUmG_reUICqyCifIBuyIDGa9YQzKw';

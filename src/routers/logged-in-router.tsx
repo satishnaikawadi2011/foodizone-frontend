@@ -9,6 +9,7 @@ import Category from '../pages/client/category';
 import Restaurant from '../pages/client/restaurant';
 import Restaurants from '../pages/client/restaurants';
 import Search from '../pages/client/search';
+import Dashboard from '../pages/driver/dashboard';
 import NotFound from '../pages/not-found';
 import Order from '../pages/order';
 import AddDish from '../pages/owner/add-dish';
@@ -47,6 +48,10 @@ const OwnerRoutes: RouteType[] = [
 	{ path: '/canceled', element: <Failure /> }
 ];
 
+const DriverRoutes: RouteType[] = [
+	{ path: '/', element: <Dashboard /> }
+];
+
 const LoggedInRouter = () => {
 	const { data, loading, error } = useMeQuery();
 
@@ -69,6 +74,10 @@ const LoggedInRouter = () => {
 					})}
 				{data.me.role === UserRole.Owner &&
 					OwnerRoutes.map((route) => {
+						return <Route key={route.path} path={route.path} element={route.element} />;
+					})}
+				{data.me.role === UserRole.Delivery &&
+					DriverRoutes.map((route) => {
 						return <Route key={route.path} path={route.path} element={route.element} />;
 					})}
 				{CommonUserRoutes.map((route) => {

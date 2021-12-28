@@ -54,7 +54,7 @@ const Order = () => {
   return (
     <div className="mt-32 container flex justify-center">
       <Helmet>
-        <title>Order #{params.id} | FoodiZone</title>
+        <title>Order {params.id} | FoodiZone</title>
       </Helmet>
       <div className="border border-gray-800 w-full max-w-screen-sm flex flex-col justify-center">
         <h4 className="bg-gray-800 w-full py-5 text-white text-center text-xl">
@@ -135,7 +135,7 @@ const Order = () => {
           )}
           {data?.getOrder.order?.status === OrderStatus.Delivered && (
             <span className=" text-center mt-5 mb-3  text-2xl text-lime-600">
-              Thank you for using Nuber Eats
+              Thank you for using FoodiZone.
             </span>
           )}
         </div>
